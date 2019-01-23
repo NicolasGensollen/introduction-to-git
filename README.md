@@ -264,6 +264,30 @@ La suite de charactères bizarres s'appelle le `hash` du commit et constitue en 
 
 ## V. Les branches
 
+Jusqu'à présent on a suivi un mode de dévelopement totalement linéaire où on modifie notre projet par petites touches successives. Ce genre d'approche peut être suffisante mais se révèlent souvent problématiques lorsqu'on travaille à plusieurs ou lorsqu'on a à developper plusieurs foctionnalités en même temps. Heureusement, git possède une solution particulièrement puissante pour gérer cela: *les branches*.
+
+### Qu'est-ce qu'une branche?
+
+todo...
+
+### Créer une nouvelle branche
+
+todo...
+
+### Se déplacer d'une branche à une autre
+
+todo...
+
+### Faire des commits sur diverses branches
+
+todo...
+
+### Fusionner des branches
+
+todo...
+
+### Supprimer une branche
+
 todo...
 
 ## VI. Partager son projet
