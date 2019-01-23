@@ -69,7 +69,7 @@ git: 'comit' is not a git command. See 'git --help'.
 
 Did you mean this?
     commit
-    ```
+```
 
 ## IV. Créer un projet
 
@@ -142,8 +142,8 @@ Untracked files:
 
     README.md
 
-    nothing added to commit but untracked files present (use "git add" to track)
-    ```
+nothing added to commit but untracked files present (use "git add" to track)
+```
 
 Comme souvent, Git est assez verbeux mais il n'y a rien de bien compliqué ici. La première ligne nous dit simplement que nous sommes actuellement sur la branche `master`. Nous reviendrons la dessus lorsque nous parlerons des branches, pour le moment ignorons cette information. La suite nous dit qu'il y a actuellement un fichier non répertorié par git dans le projet, et que ce fichier s'appelle `README.md`. Jusque là, pas de surprise, on vient effectivement juste de  créer ce fichier et, même si git le voit, il ne fait rien avec pour le moment. 
 
@@ -166,7 +166,7 @@ Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 
     new file:   README.md
-    ```
+```
 
 Notre README est donc passé du status de fichier non traqué à celui de nouveau fichier. 
 
@@ -179,7 +179,7 @@ $ git commit -m "Add README"
 [master (root-commit) aa0fef6] Add README
  1 file changed, 2 insertions(+)
   create mode 100644 README.md
-  ```
+```
 
 Nous venons tout juste de faire notre premier commit! L'option `-m` permet de spécifier un message expliquant les changements que ce commit introduit. Dans notre exemple, ce commit ajoute le fichier `README.md` à notre projet de telle sorte que notre message est `Add README`. Spécifier un message pour chaque commit n'est pas obligatoire mais TRES FORTEMENT encouragé... Autrement, il devient très rapidement impossible de se rappeler ce que chaque commit du projet avait pour but. 
 
@@ -187,11 +187,11 @@ Git nous informe donc ici qu'il vient de créer un nouveau commit (le `root-comm
 
 Regardons l'état de notre projet:
 
-  ```bash
-  $ git status
-  On branch master
-  nothing to commit, working directory clean
-  ```
+```bash
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
 
 Notre projet est clean: il ne contient aucun travail non sauvegardé.
 
@@ -215,8 +215,8 @@ Changes not staged for commit:
 
         modified:   README.md
 
-        no changes added to commit (use "git add" and/or "git commit -a")
-        ```
+no changes added to commit (use "git add" and/or "git commit -a")
+```
 
 Git nous informe que le fichier `README.md` a été modifié depuis le dernier commit et nous donne quelques exemples de commandes suivant ce que nous pourrions vouloir faire. La commande `git checkout README.md` restaure l'état de `README.md` de notre dernier commit. Dans notre exemple, cela veut dire qu'on reviendrait à un README sans les informations de contacts que l'on vient juste de rajouter. On voit bien sûr l'intérêt de cette commande: Imaginez que vous vouliez tenter de rajouter du code pour faire quelque chose de compliqué, mais qu'après plusieurs heures de souffrance, vous décidez que c'est finalement une mauvaise idée et que tout doit revenir "comme avant". En une simple commande vous pouvez revenir à une version propre de votre fichier. 
 
