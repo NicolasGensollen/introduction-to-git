@@ -589,7 +589,15 @@ README.md
 
 Et oui, git maintient une parfaite cohérence entre le contenu de votre dossier et l'endroit où vous vous trouvez dans l'historique!
 
-### Fusionner des branches
+### Aller plus loin
+
+Plus d'information disponible sur les liens suivants:
+
+- [Qu'est-ce qu'une branche](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
+
+## VI. La  fusion
+
+### Quand tout se passe bien
 
 Gardez en tête que la branche `master` a la particularité d'être la branche par défaut dans git. C'est en général la branche que l'on choisit pour y mettre son travail lorsqu'il est stable. Lorsque vous distribuez votre programme, vous n'avez probalement pas envie que les utilisateurs rencontre des bugs que vous avez introduit dans vos tentatives d'améliorations. La solution consiste donc a toujours *tirer* de nouvelles branches pour tester l'implémentation de nouvelles fonctionalités. Si cela n'aboutit à rien, vous pouvez toujours supprimer la branche. Intéressons nous maintenant au cas où vous êtes satisfait de votre travail et que vous aimeriez bien l'inclure dans votre branche master afin que tout le monde en profite sans avoir à changer de branche.
 
@@ -653,17 +661,34 @@ $ git branch -d new-feature
 Deleted branch new-feature (was 3214f6a).
 ```
 
+### Quand tout se passe mal: le merge conflict
+
+todo...
+
 ### Aller plus loin
 
 Plus d'information disponible sur les liens suivants:
 
-- [Qu'est-ce qu'une branche](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
 - [Fusionner des branches](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Brancher-et-fusionner%C2%A0%3A-les-bases)
 
-## VI. Partager son projet
+## VII. Partager son projet
+
+### Créer un compte GitHub
 
 todo...
 
-## VII. Contribuer
+### Mettre son projet en ligne
+
+todo...
+
+### Les remotes
+
+todo...
+
+### Aller plus loin
+
+todo...
+
+## VIII. Contribuer
 
 todo...
