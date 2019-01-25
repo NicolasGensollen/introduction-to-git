@@ -407,9 +407,9 @@ Git nous dit que nous sommes sur la branche `new-feature` et qu'il existe dorré
 ```
 ## Utilisation
 Pour utiliser le code du projet, ouvrez un terminal et lancez:
-```bash
+
 $ python main.py
-```
+
 ```
 
 Regardons à nouveau l'état de notre projet:
@@ -452,24 +452,24 @@ Ce répertoire contient le code source de mon projet test dans le cadre du modul
 +## Utilisation
 +Pour utiliser le code du projet, ouvrez un terminal et lancez:
 +
-+```bash
 +$ python main.py
-+```
 +
 ## Contact
 Pour toute question, merci de me contacter à name.familly_name@upmc.fr.
 ```
 
-Les lignes avec un symbole `+` au début sont les lignes que nous avons ajouté par rapport au dernier commit. Pour le moment cet outil peut sembler peut utile, mais lorsqu'on travaille à plusieurs sur des fichiers de plusieurs milliers de lignes, il devient vit indispensable. Dans notre cas, la mémoire nous revient et nous fermons cette fenêtre avec la touche `q`.
+Les lignes avec un symbole `+` au début sont les lignes que nous avons ajouté par rapport au dernier commit. On est donc en mesure de savoir exactement ce qui a changé dans ce fichier depuis la dernière fois où on a réalisé un commit. 
+
+Pour le moment cet outil peut sembler assez peu utile, mais lorsqu'on travaille à plusieurs sur des fichiers de plusieurs milliers de lignes, il devient vit indispensable. Dans notre cas, la mémoire nous revient grâce à `git diff`, et nous pouvons donc fermer cette fenêtre avec la touche `q`.
 
 Revenons à nous moutons. On veut maintenant faire un ou plusieurs commits avec notre travail. On a plusieurs options qui s'offrent à nous:
 
 - ajouter les deux fichiers et faire une seul commit.
 - ajouter `main.py`, faire un commit, puis ajouter `README.md` et faire un commit.
 
-Les deux approches se valent et il n'y a pas vraiment de meilleure solution. En règle générale, on essaye d'avoir des commits relativement simples et qui combinent des changements ayant un rapport. Pour cela, le message de commit peut être un bon test: s'il est facile à formuler (par exemple: "Change the color of the tile") c'est souvent bon signe.
+Les deux approches se valent et il n'y a pas vraiment de meilleure solution. En règle générale, on essaye d'avoir des commits relativement simples et qui combinent des changements ayant un rapport entre eux. Pour cela, le message de commit peut être un bon test: s'il est facile à formuler (par exemple: "Change the color of the title") c'est souvent bon signe. Si on se rend compte qu'il y a en fait plein de nouveautés dans ce commit, c'est surement un commit un peu trop gros. Gardez en tête qu'un autre developpeur doit pouvoir se faire une bonne idée de l'évolution de votre projet seulement en regardant la séquence de commits et leurs messages.
 
-Pour notre cas, nous allons faire un seul commit mais rien ne vous empêche de faire différemment. Commencons par ajouter `main.py`:
+Pour notre cas, nous allons faire un seul commit mais rien ne vous empêche de faire différemment. Commençons par ajouter `main.py`:
 
 ```bash
 git add main.py
@@ -550,9 +550,13 @@ Cela devrait ouvrir une nouvelle fenêtre avec les lignes suivantes:
 
 ```
 
-On voit bien nos trois commit dans l'ordre chronologique inverse. La partie intéressante est ici entre parenthèses: notre dernier commit possède l'information `(HEAD -> new-feature)` alors que celui d'avant possède uniquement `(master)`, et celui d'encore avant rien du tout... Cette information entre parenthèse n'est ni plus ni moins que là où se trouve nos branches dans l'historique (rappellez vous, une branche est juste un pointeur sur un commit...). On a donc la branche `new-feature` qui pointe sur notre dernier commit (oublions le `HEAD` pour le moment, on y reviendra), et la branche `master` qui pointe sur le commit d'avant.
+On voit bien nos trois commits dans l'ordre chronologique inverse. La partie intéressante est ici entre parenthèses: notre dernier commit possède l'information `(HEAD -> new-feature)` alors que celui d'avant possède uniquement `(master)`, et celui d'encore avant rien du tout... 
 
-Tout cela voudrait-il dire que tout le travail qu'on vient juste de faire n'est pas disponible sur `master`?? Il suffit d'aller voir:
+Cette information entre parenthèse n'est ni plus ni moins que l'emplacement de nos branches dans l'historique (rappellez vous, une branche est juste un pointeur sur un commit...). On a donc la branche `new-feature` qui pointe sur notre dernier commit (oublions le `HEAD` pour le moment, on y reviendra), et la branche `master` qui pointe sur le commit d'avant.
+
+Tout cela voudrait-il dire que tout le travail qu'on vient juste de faire n'est pas disponible sur `master`?? 
+
+Il suffit d'aller voir pour en être certain:
 
 ```bash
 $ git checkout master
@@ -560,7 +564,7 @@ Switched to branch 'master'
 $ git log
 ```
 
-On devrait voir le même log ici:
+Cela devrait afficher le log suivant:
 
 ```
 commit e4b2b5304344f8c0ff855d1814745dda6c374be3
@@ -582,6 +586,8 @@ Le troisième commit n'est plus là... Autrement dit, cette branche n'a jamais �
 $ ls
 README.md
 ```
+
+Et oui, git maintient une parfaite cohérence entre le contenu de votre dossier et l'endroit où vous vous trouvez dans l'historique!
 
 ### Fusionner des branches
 
