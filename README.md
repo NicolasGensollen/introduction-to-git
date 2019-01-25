@@ -268,15 +268,104 @@ Jusqu'à présent on a suivi un mode de dévelopement totalement linéaire où o
 
 ### Qu'est-ce qu'une branche?
 
-todo...
+Même si on ne le sait pas encore, on a déjà été confronté dans notre petit projet aux branches. En effet, rappellez vous de notre tout premier `git status` nous indicant que nous étions sur la branche `master`. Jusqu'à présent, nous avons donc travaillé sur une branche, toujours la même, et qui s'appelle `master`.
+
+Tout cela ne nous dit toujours pas ce qu'est une branche pour git... **Une branche est tout simplement un pointeur vers un commit, rien de plus compliqué.**
+
+La branche par défaut dans un projet Git s'appelle généralement `master` mais il est tout à fait possible de la renomer (plutôt déconseillé car avoir son travail stable sur `master` est une sorte de convention sur Git).
 
 ### Créer une nouvelle branche
 
-todo...
+Une branche est donc quelque chose de très simple, et il est également très facile d'en créer. Retournons sur notre projet et lancons la commande suivante:
+
+```bash
+$ git branch
+* master
+```
+
+Cette commande liste les branches disponibles et nous indique sur laquelle nous nous trouvons actuellement. Ici, on en a qu'une (`master`) et on se trouve logiquement dessus comme nous l'indique le symbole `*` devant le nom de la branche.
+
+Nous allons maintenant créer une nouvelle branche que nous appelerons `new-feature`:
+
+```bash
+$ git branch new-feature
+```
+
+Et voilà! Nous avons créé une nouvelle branche! On peut s'en assurer en listant nos branches:
+
+```bash
+$ bit branch
+* master
+  new-feature
+```
 
 ### Se déplacer d'une branche à une autre
 
-todo...
+Très bien, mais le symbole `*` est toujours devant `master`... Cela signifie que, même si nous avons créé une nouvelle branche, nous sommes toujours sur notre bonne vieille branche `master`... Cela signifie que si nous faisions un commit maintenant, il serait réalisé sur la branche `master` et non sur `new-feature`...
+
+Il faut donc dire à git que l'on souhaite changer de branche et aller voir `new-feature`. On fait cela avec la commande suivante:
+
+```bash
+$ git checkout new-feature
+Switched to branch 'new-feature'
+```
+
+Cette fois, git nous dit que nous avons changé de branche pour aller sur `new-feature`. Vérifions cela:
+
+```bash
+$ git branch
+  master
+* new-feature
+```
+
+Le symbole `*` est bien devant `new-feature`, on a donc bien réussi à changer de branche!
+
+**Astuce:** Il arrive très souvent de créer une nouvelle branche et de vouloir s'y déplacer immédiatement. En fait, cela est si courant qu'il existe un raccourci pour faire cela en une seule commande au lieu de deux. Testonc cela:
+
+```bash
+$ git checkout -b to-be-killed-soon
+Switched to a new branch 'to-be-killed-soon'
+```
+
+Et voilà, la commande `git checkout -b` permet de faire en une seule fois l'équivalent d'un `git branch` et d'un `git checkout`.
+
+### Supprimer une branche
+
+Regardons l'état de nos branches:
+
+```bash
+$ git branch
+  master
+  new-feature
+* to-be-killed-soon
+```
+
+On a donc trois branches et on se trouve actuellement sur `to-be-killed-soon`. Comme son nom le laissait entendre, nous allons ici détruire cette pauvre branche. Détruire une branche est également très simple et se fait avec la commande `git branch -d` (ou l'option `-d` signifie *delete*). Testons cela:
+
+```bash
+$ git branch -d to-be-killed-soon
+error: Cannot delete the branch 'to-be-killed-soon' which you are currently on.
+```
+
+Ach!! Git refuse de détruire la branche! Mais comme souvent, git nous explique ce qui ne va pas. Ici, nous essayons de détruire une branche sur laquelle nous nous trouvons. Il suffit de se visualiser dans un arbre avec une scie pour comprendre que ce n'est en effet pas une bonne idée...
+
+Obtempérons et changeons de branche avant de lancer sa destruction:
+
+```bash
+$ git checkout new-feature
+Switched to branch 'new-feature'
+$ git branch -d to-be-killed-soon
+Deleted branch to-be-killed-soon (was e4b2b53).
+```
+
+Et voilà, mission accomplie! Nous venons de supprimer une branche! Vérifions pour en avoir le coeur net:
+
+```bash
+$ git branch
+  master
+* new-feature
+```
+
 
 ### Faire des commits sur diverses branches
 
@@ -289,6 +378,12 @@ todo...
 ### Supprimer une branche
 
 todo...
+
+### Aller plus loin
+
+Plus d'information disponible sur les liens suivants:
+
+- [git-scm.com](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
 
 ## VI. Partager son projet
 
