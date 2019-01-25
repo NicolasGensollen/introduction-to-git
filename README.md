@@ -591,17 +591,74 @@ Et oui, git maintient une parfaite cohérence entre le contenu de votre dossier 
 
 ### Fusionner des branches
 
-todo...
+Gardez en tête que la branche `master` a la particularité d'être la branche par défaut dans git. C'est en général la branche que l'on choisit pour y mettre son travail lorsqu'il est stable. Lorsque vous distribuez votre programme, vous n'avez probalement pas envie que les utilisateurs rencontre des bugs que vous avez introduit dans vos tentatives d'améliorations. La solution consiste donc a toujours *tirer* de nouvelles branches pour tester l'implémentation de nouvelles fonctionalités. Si cela n'aboutit à rien, vous pouvez toujours supprimer la branche. Intéressons nous maintenant au cas où vous êtes satisfait de votre travail et que vous aimeriez bien l'inclure dans votre branche master afin que tout le monde en profite sans avoir à changer de branche.
 
-### Supprimer une branche
+Ce processus s'appelle une fusion de branches (*merge* en anglais), et se réalise avec la commande `git merge`. Lorsque l'on fusionne deux branches, il y a une branche qui va recevoir les commits d'une autre. Dans notre projet, on veut que `master` recoive le commit que l'on a réalisé dans `new-feature`. On va donc fusioner `new-feature` dans `master`.
 
-todo...
+Bon, passons à la pratique! Tout d'abord, assurons nous d'être sur `master` (exercice). Maintenant, fusionons `new-feature` dans `master`:
+
+```bash
+$ git merge new-feature
+Updating e4b2b53..3214f6a
+Fast-forward
+ README.md |  7 +++++++
+ main.py   | 10 ++++++++++
+ 2 files changed, 17 insertions(+)
+ create mode 100644 main.py
+```
+
+Et voilà! Nous venons tout juste de réaliser notre première fusion! Git nous explique ici que tout s'est bien passé (on verra plus tard ce que git nous dit lorsque ça ne se passe pas bien). Pour le moment, on ignore la ligne `Fast-forward`, on y reviendra plus tard. Le reste est assez clair, deux fichiers ont été impactés et on a uniquement réalisé des ajouts (17 en tout pour mon cas). Vérifions l'état du projet:
+
+```bash
+$ git status
+On branch master
+nothing to commit, working directory clean
+```
+
+Regardons aussi notre historique pour voir les effets de la fusion:
+
+```bash
+$ git log --graph --all --decorate
+```
+
+```
+* commit 3214f6a19ae4b0c9165a0da42c0f9dc95025c3db (HEAD -> master, new-feature)
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Fri Jan 25 16:00:52 2019 +0100
+| 
+|     Setup main.py and update doc
+|  
+* commit e4b2b5304344f8c0ff855d1814745dda6c374be3
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Wed Jan 23 19:33:25 2019 +0100
+| 
+|     Add contact information to the readme.
+|  
+* commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+  Date:   Wed Jan 23 19:16:56 2019 +0100
+      
+    Add README
+
+```
+
+Cette fois, les deux branches (`master` et `new-feature`) pointent bien sur le tout dernier commit. `master` contient donc maintenant tout notre travail.
+
+**Note:** La fusion de branches ne détruit pas de branches. Autrement dit, la branche `new-feature` existe toujours et on peut toujours s'y rendre (exercice). Si on continue à faire des commits sur `master`, la branche `new-deature` continuera d'exister et de pointer sur ce même troisième commit.
+
+**Note:** C'est généralement recommandé de supprimer les branches que l'on utilise plus. Cela évite de se retrouver perdu dans un océan de noms de branches dont on a rapidement oublié l'utilité. Supprimons donc notre branch `new-feature`:
+
+```bash
+$ git branch -d new-feature
+Deleted branch new-feature (was 3214f6a).
+```
 
 ### Aller plus loin
 
 Plus d'information disponible sur les liens suivants:
 
-- [git-scm.com](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
+- [Qu'est-ce qu'une branche](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
+- [Fusionner des branches](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Brancher-et-fusionner%C2%A0%3A-les-bases)
 
 ## VI. Partager son projet
 
