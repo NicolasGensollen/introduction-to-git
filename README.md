@@ -320,7 +320,7 @@ $ git branch
 
 Le symbole `*` est bien devant `new-feature`, on a donc bien réussi à changer de branche!
 
-**Astuce:** Il arrive très souvent de créer une nouvelle branche et de vouloir s'y déplacer immédiatement. En fait, cela est si courant qu'il existe un raccourci pour faire cela en une seule commande au lieu de deux. Testonc cela:
+**Astuce:** Il arrive très souvent de créer une nouvelle branche et de vouloir s'y déplacer immédiatement. En fait, cela est si courant qu'il existe un raccourci pour le faire en une seule commande au lieu de deux. Testons:
 
 ```bash
 $ git checkout -b to-be-killed-soon
@@ -340,14 +340,14 @@ $ git branch
 * to-be-killed-soon
 ```
 
-On a donc trois branches et on se trouve actuellement sur `to-be-killed-soon`. Comme son nom le laissait entendre, nous allons ici détruire cette pauvre branche. Détruire une branche est également très simple et se fait avec la commande `git branch -d` (ou l'option `-d` signifie *delete*). Testons cela:
+On a donc trois branches et on se trouve actuellement sur `to-be-killed-soon`. Comme son nom le laisse entendre, nous allons ici détruire cette pauvre branche `to-be-killed-soon`. Détruire une branche est, tout comme la création d'une branche, un processus très simple, et se fait avec la commande `git branch -d` (ou l'option `-d` signifie *delete*). Testons cela:
 
 ```bash
 $ git branch -d to-be-killed-soon
 error: Cannot delete the branch 'to-be-killed-soon' which you are currently on.
 ```
 
-Ach!! Git refuse de détruire la branche! Mais comme souvent, git nous explique ce qui ne va pas. Ici, nous essayons de détruire une branche sur laquelle nous nous trouvons. Il suffit de se visualiser dans un arbre avec une scie pour comprendre que ce n'est en effet pas une bonne idée...
+Ach!! Git refuse de détruire la branche! Mais comme souvent, git nous explique ce qui ne va pas. Ici, nous essayons de détruire une branche sur laquelle nous nous trouvons. Il suffit de se visualiser dans un arbre avec une scie à la main pour comprendre que ce n'est en effet pas une bonne idée...
 
 Obtempérons et changeons de branche avant de lancer sa destruction:
 
@@ -366,10 +366,222 @@ $ git branch
 * new-feature
 ```
 
-
 ### Faire des commits sur diverses branches
 
-todo...
+Cette petite gymnastique sur les branches était fort sympathique mais on ne voit toujours pas bien à quoi ça pourrait nous servir... Et pour cause, pour le moment, toutes nos branches pointaient sur le même commit! 
+
+Avant de continuer, vérifier que vous êtes bien sur la branche `new-feature` (exercice surprise). Si vous vous trouvez sur une autre branche, déplacez vous sur `new-feature`. 
+
+Créons maintenant un nouveau fichier `main.py` qui va contenir le code Python de notre projet. Pour le moment, on est pas super inspiré donc on va juste préparer le terrain pour le moment où l'inspiration viendra:
+
+```python
+# Contenu de main.py
+#
+# ARE-dynamics 2019
+
+def main:
+   """Fonction principale."""
+   pass
+
+if __name__ == "__main__":
+    main()
+```
+
+Si ce code ressemble à du chinois (et que vous n'êtes pas chinois...), il vaut mieux vous replonger rapidement dans les cours d'introduction à Python. Néanmoins, cela ne dérange pas du tout pour la suite de ce tutoriel.
+
+Vérifions donc l'état de notre projet:
+
+```bash
+$ git status
+On branch new-feature
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+    main.py
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+
+Git nous dit que nous sommes sur la branche `new-feature` et qu'il existe dorrénavant un fichier non traqué: `main.py`. Pour le moment, continuons notre travail. On veut maintenant mettre un petit mot dans le README pour expliquer aux autres comment utiliser notre code. Ouvrons donc `README.md` et insérons les lignes suivantes juste avant les informations de contacts:
+
+```
+## Utilisation
+Pour utiliser le code du projet, ouvrez un terminal et lancez:
+```bash
+$ python main.py
+```
+```
+
+Regardons à nouveau l'état de notre projet:
+
+```bash
+$ git status
+On branch new-feature
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   README.md
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        main.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+Comme toujours, il y a beaucoup d'information, mais en y regardant de plus près, il n'y a rien de très compliqué: On a maintenant un fichier non traqué (`main.py`), ce qui est normal puisqu'on vient de le créer et qu'on n'a rien signalé à Git... Et on a un fichier modifié: `README.md`. Là encore, rien d'anormal, on vient juste de le modifier.
+
+Supposons maintenant que nous partions faire autre chose pendant quelques heures et qu'à notre retour nous aillons oublié ce que nous avions changé dans `README.md`... Git possède un outil génial pour comparer l'état d'un fichier avec son état dans un autre commit: `git diff`. Testons cela et comparons l'état de README.md avec l'état qu'il avait dans le commit précédent:
+
+```bash
+$ git diff README.md
+```
+
+Cela devrait ouvrir une nouvelle fenêtre affichant les lignes suivantes:
+
+```
+diff --git a/README.md b/README.md
+index 15fbd9e..f51efc9 100644
+--- a/README.md
++++ b/README.md
+@@ -1,5 +1,12 @@
+Ce répertoire contient le code source de mon projet test dans le cadre du module ARE dynamics 2019.
+   
++## Utilisation
++Pour utiliser le code du projet, ouvrez un terminal et lancez:
++
++```bash
++$ python main.py
++```
++
+## Contact
+Pour toute question, merci de me contacter à name.familly_name@upmc.fr.
+```
+
+Les lignes avec un symbole `+` au début sont les lignes que nous avons ajouté par rapport au dernier commit. Pour le moment cet outil peut sembler peut utile, mais lorsqu'on travaille à plusieurs sur des fichiers de plusieurs milliers de lignes, il devient vit indispensable. Dans notre cas, la mémoire nous revient et nous fermons cette fenêtre avec la touche `q`.
+
+Revenons à nous moutons. On veut maintenant faire un ou plusieurs commits avec notre travail. On a plusieurs options qui s'offrent à nous:
+
+- ajouter les deux fichiers et faire une seul commit.
+- ajouter `main.py`, faire un commit, puis ajouter `README.md` et faire un commit.
+
+Les deux approches se valent et il n'y a pas vraiment de meilleure solution. En règle générale, on essaye d'avoir des commits relativement simples et qui combinent des changements ayant un rapport. Pour cela, le message de commit peut être un bon test: s'il est facile à formuler (par exemple: "Change the color of the tile") c'est souvent bon signe.
+
+Pour notre cas, nous allons faire un seul commit mais rien ne vous empêche de faire différemment. Commencons par ajouter `main.py`:
+
+```bash
+git add main.py
+```
+
+Regardons le statut:
+
+```bash
+$ git status
+On branch new-feature
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    new file:   main.py
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   README.md
+```
+
+Le fichier `main.py` a été ajouté et est près à être *committed*, et le fichier `README.md` est toujours dans le même état. Ajoutons le:
+
+```bash
+$ git add README.md
+```
+
+Et regardons de nouveau l'état du projet:
+
+```bash
+$ git status
+On branch new-feature
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+    modified:   README.md
+    new file:   main.py
+```
+
+Parfait! On est près à faire un nouveau commit. Let's do it!
+
+```bash
+$ git commit -m "Setup main.py and update doc"
+[new-feature 3214f6a] Setup main.py and update doc
+ 2 files changed, 17 insertions(+)
+ create mode 100644 main.py
+```
+
+Si vous êtes observateur vous avez surement remarqué un différence avec nos commits précedents. En effet, nous venons juste de faire un commit sur `new-feature` et non sur `master`. Cela n'a l'air de rien comme ça mais on vient juste d'introduire une divergence dans l'historique de notre projet. Regardons cela de plus près.
+
+Commencons par regarder l'historique de notre projet avec la commande `git log` que nous connaissons déjà. Toutefois, rajoutons quelques options pour avoir quelque chose d'un peu plus joli:
+
+```bash
+$ git log --graph --all --decorate
+```
+
+Cela devrait ouvrir une nouvelle fenêtre avec les lignes suivantes:
+
+```
+* commit 3214f6a19ae4b0c9165a0da42c0f9dc95025c3db (HEAD -> new-feature)
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Fri Jan 25 16:00:52 2019 +0100
+| 
+|     Setup main.py and update doc
+|  
+* commit e4b2b5304344f8c0ff855d1814745dda6c374be3 (master)
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Wed Jan 23 19:33:25 2019 +0100
+| 
+|     Add contact information to the readme.
+|  
+* commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+  Date:   Wed Jan 23 19:16:56 2019 +0100
+      
+     Add README
+
+```
+
+On voit bien nos trois commit dans l'ordre chronologique inverse. La partie intéressante est ici entre parenthèses: notre dernier commit possède l'information `(HEAD -> new-feature)` alors que celui d'avant possède uniquement `(master)`, et celui d'encore avant rien du tout... Cette information entre parenthèse n'est ni plus ni moins que là où se trouve nos branches dans l'historique (rappellez vous, une branche est juste un pointeur sur un commit...). On a donc la branche `new-feature` qui pointe sur notre dernier commit (oublions le `HEAD` pour le moment, on y reviendra), et la branche `master` qui pointe sur le commit d'avant.
+
+Tout cela voudrait-il dire que tout le travail qu'on vient juste de faire n'est pas disponible sur `master`?? Il suffit d'aller voir:
+
+```bash
+$ git checkout master
+Switched to branch 'master'
+$ git log
+```
+
+On devrait voir le même log ici:
+
+```
+commit e4b2b5304344f8c0ff855d1814745dda6c374be3
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Wed Jan 23 19:33:25 2019 +0100
+
+    Add contact information to the readme.
+
+commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Wed Jan 23 19:16:56 2019 +0100
+
+    Add README
+```
+
+Le troisième commit n'est plus là... Autrement dit, cette branche n'a jamais été impactée par notre travail le plus récent et ne devrait pas contenir `main.py`. Vérifions:
+
+```bash
+$ ls
+README.md
+```
 
 ### Fusionner des branches
 
