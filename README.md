@@ -1,27 +1,27 @@
 # Introduction à Git et GitHub
 
-Ce tutoriel introduit les bases de **Git** et **GitHub**. Aucune connaissance préalable sur **Git** n'est nécessaire, tout sera introduit pas à pas. Toutefois, il est probablement plus simple de suivre avec quelques bases de programmation en **Python** mais ce n'est pas obligatoire, le code utilisé servira uniquement pour créer des examples de fichiers à gérer avec Git.
+Ce tutoriel introduit les bases de **Git** et **GitHub**. Aucune connaissance préalable sur **Git** n'est nécessaire, tout sera introduit pas à pas. Toutefois, il est probablement plus simple de suivre avec quelques bases de programmation en **Python** mais ce n'est pas obligatoire, le code utilisé servira uniquement pour créer des exemples de fichiers à gérer avec Git.
 
-On suppose également un minimum d'aissance avec le terminal et les commandes Unix ainsi que la maitrise d'un éditeur de texte quelconque (par exemple **vim**, **gedit**, **notepad++** ou autres...).
+On suppose également un minimum d'aisance avec le terminal et les commandes Unix ainsi que la maitrise d'un éditeur de texte quelconque (par exemple **vim**, **gedit**, **notepad++** ou autres...).
 
-On va commencer par expliquer ce qu'est **git** et **GitHub** et quelles sont les différences fondamentales entre les deux. On verra ensuite pas à pas comment créer un projet et le gérer avec **git**. Lorsqu'on aura suffisemment d'aisance, on s'attaquera au partage de notre projet sur **GitHub**. On peut donc tout à fait suivre le début sans connexion internet (en supposant que **Git** est déjà bien installé sur votre système.
+On va commencer par expliquer ce que sont **Git** et **GitHub** et quelles sont les différences fondamentales entre les deux. On verra ensuite pas à pas comment créer un projet et le gérer avec **Git**. Lorsqu'on aura suffisemment d'aisance, on s'attaquera au partage de notre projet sur **GitHub**. On peut donc tout à fait suivre le début de ce tutoriel sans connexion internet (en supposant que **Git** est déjà bien installé sur votre système.
 
 
 ## I. Différence entre Git et GitHub
 
-Le but de cette section est d'expliquer en quelques mots la différence fondamentale entre **Git** et **GitHub** qui sont souvent confondu.
+Le but de cette section est d'expliquer en quelques mots la différence fondamentale entre **Git** et **GitHub** qui sont souvent confondus.
 
 ### Git
 
-**Git** est un *système de contrôle de version* (*version control system* en anglais) qui permet d'organiser le dévelopement de ses projets. Autrement dit, **Git** est un programme permettant aux developpeurs d'améliorer leur productivité en automatisant certaines taches rébarbatives. 
+**Git** est un *système de contrôle de version* (*version control system* en anglais) qui permet d'organiser le dévelopement de ses projets. Autrement dit, **Git** est un programme permettant aux developpeurs d'améliorer leur productivité en automatisant certaines tâches rébarbatives. 
 
 ### A quoi ça sert?
 
 Qui n'a jamais voulu tester un bout de code sans être certain de son fonctionnement? 
 
-Sans système de contrôle de version, il faudrait passer par tout un processsus de copies de fichiers et de suppressions en cas d'échec. C'est gérable pour des projets très très simples mais impensable dans la "*vraie vie*".  
+Sans système de contrôle de version, il faudrait copier son fichier, essayer dans la copie pour pouvoir la supprimer si la tentative n'aboutit pas. Avec ce genre d'approches, on aboutit souvent à de nombreuses copies de fichiers aux noms pas toujours évocateurs, et on finit par s'y perdre très rappidement. C'est peut être gérable pour des projets très très simples mais impensable dans la "*vraie vie*".  
 
-**Git** permet ainsi de tester diverses implémentation en parrallèle, de combiner diverses solutions trouvées, ou de revenir en arrière dans l'historique si besoin. Autrement dit, on peut très bien utiliser **Git** tout seul sur une machine non connectée à Internet.
+**Git** permet de conserver l'historique de son projet (on verra bientôt que que l'on entend par là) et de tester diverses implémentations en parrallèle. On verra également comment **Git** permet de combiner divers bouts de notre travail, et comment il nous permet de naviguer dans l'historique de notre projet. Autrement dit, en utilisant **git** correctement, il est vraiment très difficile de perdre du travail. Un autre point important à comprendre est qu'on peut tout à fait utiliser **Git** tout seul sur une machine non connectée à Internet (dans ce cas, on ne *poussera* pas notre code sur **GitHub** pour le rendre publique).
 
 ### Comment ça marche?
 
