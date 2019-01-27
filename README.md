@@ -1,5 +1,12 @@
 # Introduction à Git et GitHub
 
+Ce tutoriel introduit les bases de **Git** et **GitHub**. Aucune connaissance préalable sur **Git** n'est nécessaire, tout sera introduit pas à pas. Toutefois, il est probablement plus simple de suivre avec quelques bases de programmation en **Python** mais ce n'est pas obligatoire, le code utilisé servira uniquement pour créer des examples de fichiers à gérer avec Git.
+
+On suppose également un minimum d'aissance avec le terminal et les commandes Unix ainsi que la maitrise d'un éditeur de texte quelconque (par exemple **vim**, **gedit**, **notepad++** ou autres...).
+
+On va commencer par expliquer ce qu'est **git** et **GitHub** et quelles sont les différences fondamentales entre les deux. On verra ensuite pas à pas comment créer un projet et le gérer avec **git**. Lorsqu'on aura suffisemment d'aisance, on s'attaquera au partage de notre projet sur **GitHub**. On peut donc tout à fait suivre le début sans connexion internet (en supposant que **Git** est déjà bien installé sur votre système.
+
+
 ## I. Différence entre Git et GitHub
 
 Le but de cette section est d'expliquer en quelques mots la différence fondamentale entre **Git** et **GitHub** qui sont souvent confondu.
