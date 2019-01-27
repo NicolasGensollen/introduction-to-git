@@ -663,7 +663,430 @@ Deleted branch new-feature (was 3214f6a).
 
 ### Quand tout se passe mal: le merge conflict
 
-todo...
+Dans la section précédente, la fusion était plutôt simple à réaliser pour git, et on a pas eu grand chose à faire. Cependant, il arrive assez souvent que git ne puisse pas réaliser une fusion tout seul. C'est par exemple le cas où les mêmes lignes ont été modifiées dans chacune des branches que l'on essaye de fusionner. Dans ce genre de situation, git ne peut pas décider de lui même quelle version garder. Il stoppe donc la fusion et demande à l'utilisateur de choisir: c'est ce qu'on appelle un *merge conflict*.
+
+Il est assez courant pour les nouveaux utilisateurs de git de redouter le *merge conflict* et de tout faire pour ne pas y faire face (typiquement des remplacements de fichiers hasardeux à la main...). Pourtant ce genre de situations arrivent très fréquemment sur des projets collaboratifs et il est assez simple de les résoudre quand on connait la démarche.
+
+Pour créer un *merge conflict* dans notre petit projet, nous allons tout d'abord devoir modifier les même lignes d'un fichier dans deux branches différentes. On peut très bien le faire dans `main.py`, mais on va expérimenter cela dans `README.md`. 
+
+Comme nous avons supprimé toute nos branches sauf `master`, nous devons logiquement être dessus, vérifiez cela (exercice). Nous allons créer une nouvelle branche et nous y rendre pour commencer à mettre du code dans notre fichier `main.py`:
+
+```bash
+$ git checkout -b starting-dev
+Switched to a new branch 'starting-dev'
+```
+
+Ouvrez `main.py` et remplacer l'ancien code par les lignes ci-dessous:
+
+```python
+# Contenu de main.py
+#
+# ARE-dynamics 2019
+   
+import sys
+import random
+      
+def main(argv):
+    """
+    Fonction principale.
+    Inputs:
+        - taille de la population.
+    """
+    size_population = int(argv[0])
+    population = range(size_population)
+    coordinates = [(random.random(), random.random()) for i in population]
+                                    
+    for individu in population:
+        print(f"Individu {individu} a comme coordonnées {coordinates[individu]}.")
+                                                                      
+if __name__ == "__main__":
+    main(sys.argv[1:])
+```
+
+On a pas mal amélioré notre code! Maintenant, nous créons une population d'individu dont le nombre est spécifié par l'utilisateur, et nous assignons des coordonnées aléatoires dans un carré de côté un à chacun de nos individu. Nous affichons ensuite les coordonnées de chaque individu grâce à une boucle `for`.
+
+On peut tester notre code en créant une population de 10 individus:
+
+```bash
+$ python main.py 10
+Individu 0 a comme coordonnées (0.05277413614930104, 0.5844159643936185).
+Individu 1 a comme coordonnées (0.9674770045658162, 0.7945922423864095).
+Individu 2 a comme coordonnées (0.5598427493490252, 0.1320533287880452).
+Individu 3 a comme coordonnées (0.982797189879752, 0.8402802843043232).
+Individu 4 a comme coordonnées (0.24678438555267979, 0.9546473188999856).
+Individu 5 a comme coordonnées (0.5493288131792701, 0.6368579739627384).
+Individu 6 a comme coordonnées (0.9545186595221944, 0.7876486730188562).
+Individu 7 a comme coordonnées (0.25223443272430257, 0.27643607594337627).
+Individu 8 a comme coordonnées (0.7637471682772338, 0.8690539951253577).
+Individu 9 a comme coordonnées (0.9175416464864947, 0.20631853668476108).
+```
+
+OK, ça a l'air pas mal! On est satisfait de notre boulot pour le moment et on va donc faire un commit de tout ça:
+
+```bash
+$ git add main.py
+$ git commit -m "Initialize population with random coordinates"
+[starting-dev 8227f5f] Initialize population with random coordinates
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+```
+
+On se dit également que mettre un petit mot d'explication dans le README pourrait être sympa pour les utilisateurs. Faisons cela en remplacant la section `utilisation` par:
+
+```
+## Utilisation
+Le code permet de créer une population d'individus et de les placer aléatoirement dans un carré unité. Pour utiliser le code du projet, ouvrez un terminal et lancez:
+  
+$ python main.py n_individus
+      
+Où `n_individus` est le nombre d'individus à générer.
+```
+
+Faisons un commit de ces nouvelles explications:
+
+```bash
+$ git add README.md
+$ git commit -m "Update README with new usage info"
+[starting-dev 99b15ca] Update README with new usage info
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+```
+
+On peut jeter un petit coup d'oeil à notre historique:
+
+```bash
+$ git log --graph --all --decorate
+```
+
+```
+* commit 99b15ca8c3868496d77dfdbb3f6d901a1e6fd72e (HEAD -> starting-dev)
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Sat Jan 26 19:56:19 2019 +0100
+| 
+|     Update README with new usage info
+|  
+* commit 3464bb8658b68a32698913b005a9f34904d397d5
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Sat Jan 26 12:57:20 2019 +0100
+| 
+|     Initialize population with random coordinates
+|  
+* commit 3214f6a19ae4b0c9165a0da42c0f9dc95025c3db (master)
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Fri Jan 25 16:00:52 2019 +0100
+| 
+|     Setup main.py and update doc
+|  
+* commit e4b2b5304344f8c0ff855d1814745dda6c374be3
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Wed Jan 23 19:33:25 2019 +0100
+| 
+|     Add contact information to the readme.
+|  
+* commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+  Date:   Wed Jan 23 19:16:56 2019 +0100
+      
+      Add README
+```
+
+On a donc bien deux nouveaux commits. La branche `starting-dev` sur laquelle on travaille actuellement pointe bien sur notre tout dernier commit tandis que la branche `master` est restée deux commits en arrière et ne contient pas nos derniers ajouts. 
+
+En regardans cela, on se dit qu'on devrait mettre un mot dans le README de la branche `master` pour expliquer que notre code ne fait rien et que ce sera amélioré bientôt. Faisons cela:
+
+```bash
+$ git checkout master
+Switched to branch 'master'
+```
+
+Ouvrons `README.md` et remplacons la section utilisation par:
+
+```
+## Utilisation
+Pour le moment le code ne fait rien et sera bientôt amélioré pour faire des choses super. Pour tester quand même, ouvrez un terminal et lancez:
+  
+$ python main.py
+```
+
+Voilà, de cette manière si quelqu'un essayait d'utiliser notre code sur `master` (qui est le code disponible par défaut et supposé stable), il ne serait pas surpris de n'avoir aucun résultat.
+
+Faisons donc un commit sur `master` de ces modifications:
+
+```bash
+$ git add README.md
+$ git commit -m "Add explanations for no results in the README"
+[master 9717b60] Add explanations for no results in the README
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
+Regardons l'historique de notre projet:
+
+```bash
+$ git log --graph --all --decorate
+```
+
+```
+* commit 9717b605a6022e8d01a6485b0ad30c4668978d83 (HEAD -> master)
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Sat Jan 26 20:10:09 2019 +0100
+| 
+|     Add explanations for no results in the README
+|    
+| * commit 99b15ca8c3868496d77dfdbb3f6d901a1e6fd72e (starting-dev)
+| | Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| | Date:   Sat Jan 26 19:56:19 2019 +0100
+| | 
+| |     Update README with new usage info
+| |   
+| * commit 3464bb8658b68a32698913b005a9f34904d397d5
+|/  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+|   Date:   Sat Jan 26 12:57:20 2019 +0100
+|   
+|       Initialize population with random coordinates
+|  
+* commit 3214f6a19ae4b0c9165a0da42c0f9dc95025c3db
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Fri Jan 25 16:00:52 2019 +0100
+| 
+|     Setup main.py and update doc
+|  
+* commit e4b2b5304344f8c0ff855d1814745dda6c374be3
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Wed Jan 23 19:33:25 2019 +0100
+| 
+|     Add contact information to the readme.
+|  
+* commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+  Date:   Wed Jan 23 19:16:56 2019 +0100
+      
+      Add README
+```
+
+Notre tout dernier commit apparait tout en haut puisque c'est le plus récent chronologiquement. Cependant, seul `master` pointe sur ce commit tandis que `starting-dev` pointe toujours sur le commit précédent. 
+
+A ce stade, on pourrait très bien retourner sur `starting-dev` et continuer notre travail. Supposons que nous sommes déjà satisfait de notre incroyable initialisation de population et que l'on veuille l'intégrer sans plus attendre à `master`. On sait déjà comment faire ça: on fusionne `starting-dev` dans `master`:
+
+```bash
+$ git merge starting-dev
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Aïe! Git refuse de fusioner les branches et nous envoi un message super effrayant! Bon, vu le titre de la section, on s'y attendait un peu donc gardons notre calme... La première chose à faire est toujours de lire ce que git nous dit. Ici, il nous indique qu'il y a un conflit dans `README.md` et il nous suggère d'ouvrir le fichier pour résoudre le conflit. OK, regardons donc dans le fichier:
+
+```
+# Projet test
+bla bla
+   
+## Utilisation
+<<<<<<< HEAD
+Pour le moment le code ne fait rien et sera bientôt amélioré pour faire des choses super. Pour tester quand même, ouvrez un terminal et lancez:
+=======
+Le code permet de créer une population d'individus et de les placer aléatoirement dans un carré unité. Pour utiliser le code du projet, ouvrez un terminal et lancez:
+>>>>>>> starting-dev
+          
+$ python main.py n_individus
+              
+Où `n_individus` est le nombre d'individus à générer.
+                
+## Contact
+Pour toute question, merci de me contacter à name.familly_name@upmc.fr.
+```
+
+Houlà! Il y a plein de symboles bizzares qu'on n'a jamais ajouté à notre fichier et en plus tout est mélangé! Tout d'abord, un point clé pour toujours avoir l'esprit tranquille: il est à tout moment possible de revenir en arrière et d'annuler la fusion! Pour faire ça, il suffit de taper la commande suivante:
+
+```bash
+$ git merge --abort
+```
+
+Ouf! Le README est revenu dans son état d'avant la fusion! Gardez à l'esprit que même après avoir tenté de résoudre les conflits, vous pouvez toujours abandonner la fusion si vous ne vous en sortez pas.
+
+Bon OK, on peut abandonner, mais on voudrait surtout réussir! Relancons donc la fusion:
+
+```bash
+$ git merge starting-dev
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+```
+
+Et regardons de nouveau le contenu de README.md, et plus particulièrement la zone avec les symboles bizzares:
+
+```
+## Utilisation
+<<<<<<< HEAD
+Pour le moment le code ne fait rien et sera bientôt amélioré pour faire des     choses super. Pour tester quand même, ouvrez un terminal et lancez:
+=======
+Le code permet de créer une population d'individus et de les placer aléatoirement dans un carré unité. Pour utiliser le code du projet, ouvrez un terminal et lancez:
+>>>>>>> starting-dev
+```
+
+On remarque qu'il y ici les deux versions de ce qu'on a écrit sur cette ligne: l'une des version provient de la branche `starting-dev` tandis que l'autre provient de `master`. Git nous indique cela avec les symboles `<<<<<<<`, `======`, et `>>>>>>>`:
+
+- le code entre `<<<<<<< HEAD` et `=======` provient de la branche `HEAD`
+- le code entre `=======` et `>>>>>>> starting-dev` provient de la branche `starting-dev`
+
+Git ne peut fusionner cette ligne de code et nous demande de faire quelque chose. On a alors le champ libre, on peut choisir l'une ou l'autre des solutions ou changer totalement la ligne. Pour faire cela, on doit simplement editer le fichier afin de le mettre dans l'état voulu. Notre cas est vraiment très simple, les indications sue l'on avait rédigées sur `master` ne sont plus valables maintenant que l'on va fusionner notre travail: on va donc dire à git de conserver la version de `starting-dev` et de jeter celle de `master`. Pour cela, rien de plus simple, on supprime juste tout ce dont on ne veut plus et on enregistre le fichier. On aboutit donc à la section utilisation suivante:
+
+```
+## Utilisation
+Le code permet de créer une population d'individus et de les placer aléatoirement dans un carré unité. Pour utiliser le code du projet, ouvrez un terminal et lancez:
+   
+$ python main.py n_individus
+       
+Où `n_individus` est le nombre d'individus à générer.
+```
+
+On enregistre et on ajoute le fichier pour dire à git qu'on a résolu les conflits:
+
+```bash
+$ git add README.md
+```
+
+En cas de doute, `git status` est votre amis, cette commande ne fait jamais de mal et peut donner des informations très utiles:
+
+```bash
+$ git status
+On branch master
+All conflicts fixed but you are still merging.
+  (use "git commit" to conclude merge)
+
+Changes to be committed:
+
+    modified:   README.md
+    modified:   main.py
+```
+
+Git nous dit qu'on a en effet résolu tout les conflits, mais que l'on est toujours en train de fusionner... Il nous explique également qu'on peut terminer la fusion grâce à `git commit`. Suivont ce conseil éclairé:
+
+```bash
+$ git commit
+```
+
+A ce stade, git devrait ouvrir votre éditeur de texte par défaut (souvent vim) sur votre message de commit. Et oui, pour fusionner nos deux branches, on a du créer un nouveau commit de fusion pour lequel on peut écrire un message. Git nous pré-écrit un message par défaut:
+
+```
+Merge branch `starting-dev`
+```
+
+On peut modifier ou garder ce message pour notre commit de fusion. Sauvegardez et git devrait vous confirmer la fusion:
+
+```bash
+[master 7bfb9e4] Merge branch 'starting-dev'
+```
+
+On peut regarder l'état de notre historique avec git log:
+
+```bash
+$ git log
+```
+
+```
+commit 7bfb9e44ca3412461c655ef6284f0545dfc6afe1
+Merge: 9717b60 99b15ca
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Sun Jan 27 11:55:16 2019 +0100
+
+    Merge branch 'starting-dev'
+
+commit 9717b605a6022e8d01a6485b0ad30c4668978d83
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Sat Jan 26 20:10:09 2019 +0100
+
+    Add explanations for no results in the README
+
+commit 99b15ca8c3868496d77dfdbb3f6d901a1e6fd72e
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Sat Jan 26 19:56:19 2019 +0100
+
+    Update README with new usage info
+
+commit 3464bb8658b68a32698913b005a9f34904d397d5
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Sat Jan 26 12:57:20 2019 +0100
+
+    Initialize population with random coordinates
+
+commit 3214f6a19ae4b0c9165a0da42c0f9dc95025c3db
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Fri Jan 25 16:00:52 2019 +0100
+
+    Setup main.py and update doc
+
+commit e4b2b5304344f8c0ff855d1814745dda6c374be3
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Wed Jan 23 19:33:25 2019 +0100
+
+    Add contact information to the readme.
+
+commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+Date:   Wed Jan 23 19:16:56 2019 +0100
+
+    Add README
+```
+
+Notre historique contient bien tout nos commits, le dernier en date étant le commit de fusion.
+
+On peut aussi regarder l'historique e graphe:
+
+```bash
+$ git log --graph --all --decorate
+```
+
+```
+*   commit 7bfb9e44ca3412461c655ef6284f0545dfc6afe1 (HEAD -> master)
+|\  Merge: 9717b60 99b15ca
+| | Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| | Date:   Sun Jan 27 11:55:16 2019 +0100
+| | 
+| |     Merge branch 'starting-dev'
+| |   
+| * commit 99b15ca8c3868496d77dfdbb3f6d901a1e6fd72e (starting-dev)
+| | Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| | Date:   Sat Jan 26 19:56:19 2019 +0100
+| | 
+| |     Update README with new usage info
+| |   
+| * commit 3464bb8658b68a32698913b005a9f34904d397d5
+| | Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| | Date:   Sat Jan 26 12:57:20 2019 +0100
+| | 
+| |     Initialize population with random coordinates
+| |   
+* | commit 9717b605a6022e8d01a6485b0ad30c4668978d83
+|/  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+|   Date:   Sat Jan 26 20:10:09 2019 +0100
+|   
+|       Add explanations for no results in the README
+|  
+* commit 3214f6a19ae4b0c9165a0da42c0f9dc95025c3db
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Fri Jan 25 16:00:52 2019 +0100
+| 
+|     Setup main.py and update doc
+|  
+* commit e4b2b5304344f8c0ff855d1814745dda6c374be3
+| Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+| Date:   Wed Jan 23 19:33:25 2019 +0100
+| 
+|     Add contact information to the readme.
+|  
+* commit aa0fef6c11b63a1d1558bbd6020341c0315afdc3
+  Author: NicolasGensollen <nicolas.gensollen@gmail.com>
+  Date:   Wed Jan 23 19:16:56 2019 +0100
+      
+     Add README
+```
+
+On voit bien la divergence de la branche `starting-dev` et sa fusion dans `master`. `master` pointe bien sur le tout dernier commit de fusion tandis que `starting-dev` n'a pas bougé. Pour finir, supprimons la branche `starting-dev`:
+
+```bash
+$ git branch -d starting-dev
+Deleted branch starting-dev (was 99b15ca).
+```
+
+Et voilà, nous venons d'apprendre à fusionner des branches! La plupart du temps, cette opération est directe et l'utilisateur n'a rien à faire. Dans d'autres cas, il peut y avoir des *merge conflicts* qu'il nous faut résoudre. 
 
 ### Aller plus loin
 
