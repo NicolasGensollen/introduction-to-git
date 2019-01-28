@@ -13,7 +13,7 @@ Le but de cette section est d'expliquer en quelques mots la différence fondamen
 
 ### Git
 
-**Git** est un *système de contrôle de version* (*version control system* en anglais) qui permet d'organiser le dévelopement de ses projets. Autrement dit, **Git** est un programme permettant aux developpeurs d'améliorer leur productivité en automatisant certaines tâches rébarbatives. 
+**Git** est un *système de contrôle de versions* (*version control system* en anglais) qui permet d'organiser le dévelopement de ses projets. Autrement dit, **Git** est un programme permettant aux developpeurs d'améliorer leur productivité en automatisant certaines tâches rébarbatives. 
 
 ### A quoi ça sert?
 
@@ -45,6 +45,10 @@ Cette plateforme a pris tellement d'ampleur que certaines entreprises demande au
 
 Comme expliqué plus haut, il est possible d'utiliser **Git** sans utiliser **GitHub**, et il est également possible d'utiliser **GitHub** sans utiliser **Git**. Dans les deux cas l'utilisation est très limitée et ne présente pas beaucoup d'intérêt par rapport à d'autres services comme *Dropbox*. Néanmoins, lorsque l'on combine l'utilisation des deux, on obtient un outil extrêmement puissant. La suite de ce tutoriel introduit les bases de **Git** et explique comment créer son propre projet et comment le *pousser* sur **GitHub**.
 
+### Aller plus loin
+
+- [Livre en ligne sur Git](https://git-scm.com/book/fr/v2/D%C3%A9marrage-rapide-%C3%80-propos-de-la-gestion-de-version)
+
 ## II. Vérifier si Git est installé
 
 Pour vérifier que Git est bien installé, ouvrir un terminal et taper la commande suivante:
@@ -59,6 +63,10 @@ Qui devrait retourner quelque chose comme
 git version 2.7.4
 ```
 si Git est bien installé.
+
+### Liens utiles
+
+- [Installation de Git](https://git-scm.com/book/fr/v2/D%C3%A9marrage-rapide-Installation-de-Git)
 
 ## III. Demander de l'aide à Git
 
@@ -78,7 +86,61 @@ Did you mean this?
     commit
 ```
 
-## IV. Créer un projet
+## IV. Paramétrage de Git
+
+On suppose dans cette section que c'est la première fois que l'on utilise Git. Il y a un certain nombre de réglages très simples à effectuer la première fois, ces réglages persisteront ensuite.
+
+### Paramétrage lors de la première utilisation
+
+Toutes les configurations se font via la commande `git config` qui se charge de modifier les variables de configurations. Il existe endroits différents où ces variables peuvent être stockées:
+
+- `/etc/gitconfig`: Les variables s'appliquent à tous les utilisateurs et tous les dépôts git du système. On peut modifier ces configurations en passant l'option `--system` à `git config`.
+
+- `~/.gitconfig`: Les variables s'appliquent à l'utilisateur. On peut modifier ces configurations avec l'option `--global`
+
+- Dans le fichier `.git/config` de chaque dépôt git. Dans ce cas là, les variables s'appiquent uniquement à ce dépôt.
+
+On peut donc définir différentes configurations suivant le projet ou suivant l'utilisateur. Cela ne nous impactera probablement pas dans ce tutoriel mais c'est une bonne chose à garder en mémoire car ça peut être très utile.
+
+#### Paramétrer son identité
+
+On va commencer par la configuration la plus basique et indispensable: son identité. Git définit une identité comme un nom et une adresse email, facile! On va donc informer git de notre nom et de notre courriel au niveau utilisateur:
+
+```bash
+$ git config --global user.name "John Doe"
+$ git config --global user.email john.doe@gmail.com
+```
+
+Bien entendu, il faut remplacer `John` et `Doe` par votre prénom et nom de famille.
+
+#### Paramétrer son éditeur de texte
+
+Un autre réglage assez important consiiste à indiquer à git son éditeur de texte préféré. Git utilisera ensuite cet éditeur chaque fois qu'un texte devra être édité par vos soins. Il existe un grand nombre d'éditeurs de texte proposant plus ou moins de fonctionalités (vim, gedit, emacs, nano sont les plus courants). Dans notre exemple, nous utiliserons l'éditeur *vim*:
+
+```bash
+$ git config --global core.editor vim
+```
+
+#### Vérifier ses paramètres
+
+Il est à tout moment possible de vérifier ses réglages:
+
+```bash
+$ git config --list
+user.name=John Doe
+user.email=johndoe@example.com
+color.status=auto
+color.branch=auto
+color.interactive=auto
+color.diff=auto
+```
+
+### Aller plus loin
+
+- [Paramétrer Git](https://git-scm.com/book/fr/v2/D%C3%A9marrage-rapide-Param%C3%A9trage-%C3%A0-la-premi%C3%A8re-utilisation-de-Git)
+- [tutoriel sur Vim](https://openclassrooms.com/fr/courses/43538-reprenez-le-controle-a-laide-de-linux/42693-vim-lediteur-de-texte-du-programmeur)
+
+## V. Créer un projet
 
 Il existe deux façons principales de créer un nouveau projet:
 
@@ -269,7 +331,7 @@ On y voit la liste des commits (le premier est toujours le plus récent) avec de
 
 La suite de charactères bizarres s'appelle le `hash` du commit et constitue en quelque sorte le nom du commit pour git. Lorsque nous auront besoin de référencer des commits spécifiques dans certaines commandes, c'est en général le hash du commit que l'on fournira. A noter que plusieurs commits peuvent avoir le même message descriptif, mais que les commits ont tous des hash différents. Finalement, taper "q" pour sortir du log.
 
-## V. Les branches
+## VI. Les branches
 
 Jusqu'à présent on a suivi un mode de dévelopement totalement linéaire où on modifie notre projet par petites touches successives. Ce genre d'approche peut être suffisante mais se révèlent souvent problématiques lorsqu'on travaille à plusieurs ou lorsqu'on a à developper plusieurs foctionnalités en même temps. Heureusement, git possède une solution particulièrement puissante pour gérer cela: *les branches*.
 
@@ -603,7 +665,7 @@ Plus d'information disponible sur les liens suivants:
 - [Qu'est-ce qu'une branche](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
 - [Apprendre par la pratique](https://learngitbranching.js.org)
 
-## VI. La  fusion
+## VII. La  fusion
 
 ### Quand tout se passe bien
 
@@ -1102,7 +1164,7 @@ Plus d'information disponible sur les liens suivants:
 
 - [Fusionner des branches](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Brancher-et-fusionner%C2%A0%3A-les-bases)
 
-## VII. Partager son projet
+## VIII. Partager son projet
 
 ### Créer un compte GitHub
 
@@ -1121,7 +1183,7 @@ todo...
 - [Créer et configurer un compte GitHub](https://git-scm.com/book/fr/v2/GitHub-Configuration-et-param%C3%A9trage-d%E2%80%99un-compte)
 - [Générer des clés SSH](https://git-scm.com/book/fr/v2/Git-sur-le-serveur-G%C3%A9n%C3%A9ration-des-cl%C3%A9s-publiques-SSH#s_generate_ssh_key)
 
-## VIII. Contribuer
+## IX. Contribuer
 
 todo...
 
