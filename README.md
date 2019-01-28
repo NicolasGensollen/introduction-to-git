@@ -601,6 +601,7 @@ Et oui, git maintient une parfaite cohérence entre le contenu de votre dossier 
 Plus d'information disponible sur les liens suivants:
 
 - [Qu'est-ce qu'une branche](https://git-scm.com/book/fr/v1/Les-branches-avec-Git-Ce-qu-est-une-branche)
+- [Apprendre par la pratique](https://learngitbranching.js.org)
 
 ## VI. La  fusion
 
@@ -1117,8 +1118,13 @@ todo...
 
 ### Aller plus loin
 
-todo...
+- [Créer et configurer un compte GitHub](https://git-scm.com/book/fr/v2/GitHub-Configuration-et-param%C3%A9trage-d%E2%80%99un-compte)
+- [Générer des clés SSH](https://git-scm.com/book/fr/v2/Git-sur-le-serveur-G%C3%A9n%C3%A9ration-des-cl%C3%A9s-publiques-SSH#s_generate_ssh_key)
 
 ## VIII. Contribuer
 
 todo...
+
+### Aller plus loin
+
+- [Comment contribuer à un projet](https://git-scm.com/book/fr/v2/GitHub-Contribution-%C3%A0-un-projet)
