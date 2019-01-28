@@ -13,25 +13,30 @@ Le but de cette section est d'expliquer en quelques mots la différence fondamen
 
 ### Git
 
-**Git** est un *système de contrôle de versions* (*version control system* en anglais) qui permet d'organiser le dévelopement de ses projets. Autrement dit, **Git** est un programme permettant aux developpeurs d'améliorer leur productivité en automatisant certaines tâches rébarbatives. 
+**Git** est un *système de contrôle de versions* (*version control system* en anglais) qui permet d'organiser le dévelopement de ses projets. Un système de contrôle de versions permet d'enregistrer l'évolution d'un ou plusieurs fichiers au cours du temps. A tout moment, il est possible de ramener l'état d'un ou plusieurs fichiers à une version antérieure.
 
-### A quoi ça sert?
+
+### A quoi ça sert concrètement?
 
 Qui n'a jamais voulu tester un bout de code sans être certain de son fonctionnement? 
 
-Sans système de contrôle de version, il faudrait copier son fichier, essayer dans la copie pour pouvoir la supprimer si la tentative n'aboutit pas. Avec ce genre d'approches, on aboutit souvent à de nombreuses copies de fichiers aux noms pas toujours évocateurs, et on finit par s'y perdre très rappidement. C'est peut être gérable pour des projets très très simples mais impensable dans la "*vraie vie*".  
+Sans système de contrôle de versions, il faudrait copier son fichier, essayer son code dans la copie, supprimer la copie si la tentative n'aboutit pas. Avec ce genre d'approches, on se retrouve souvent avec de nombreuses copies de fichiers aux noms pas toujours évocateurs, et on finit par s'y perdre très rappidement. Et encore, imaginez que vous soyez en collaboration avec d'autres personnes, possiblement dans d'autres fuseaux horraires... 
 
-**Git** permet de conserver l'historique de son projet (on verra bientôt que que l'on entend par là) et de tester diverses implémentations en parrallèle. On verra également comment **Git** permet de combiner divers bouts de notre travail, et comment il nous permet de naviguer dans l'historique de notre projet. Autrement dit, en utilisant **git** correctement, il est vraiment très difficile de perdre du travail. Un autre point important à comprendre est qu'on peut tout à fait utiliser **Git** tout seul sur une machine non connectée à Internet (dans ce cas, on ne *poussera* pas notre code sur **GitHub** pour le rendre publique).
+**Git** permet de conserver l'historique de son projet (on verra bientôt que que l'on entend par là) et de tester diverses implémentations en parrallèle. On verra également comment **Git** permet de combiner divers bouts de notre travail, et comment il nous permet de naviguer dans l'historique de notre projet. Autrement dit, en utilisant **git** correctement, il est vraiment très difficile de perdre du travail. 
+
+**Git** prend également tout son sens dans des projets collaboratifs où il est primordial de savoir qui a modifié quoi à quel moment, qui a introduit un bug et à quel moment.
+
+Un autre point important à comprendre est qu'on peut tout à fait utiliser **Git** tout seul sur une machine non connectée à Internet (dans ce cas, on ne *poussera* pas notre code sur **GitHub** pour le rendre publique). Attention, dans ce cas là, nos projets ne sont pas sauvegardés sur des serveurs externes, ils existent uniquement sur notre machine!
 
 ### Comment ça marche?
 
-On expliquera plus en détails le fonctionnement de **Git** dans les sections suivantes avec de exemples. En deux mots, **Git** permet de prendre des snapshots de son projet à divers moments. On nomme ces snapshots des `commits` dans le jargon **Git**. Ces snapshots (ou commits) sont organisés en un arbre dont la racine est le premier commit, en d'autres termes l'état initial du projet. Chaque nouveau commit que l'on réalise ensuite pointe vers son parent, et **Git** traque les changements requis pour passer d'un commit à un autre. Une des forces de cette approche est que l'on peut naviguer facilement dans l'historique de son projet sans stocker trop de données et avec une grande rapidité.
+On expliquera plus en détails le fonctionnement de **Git** dans les sections suivantes avec de exemples. En quelques mots, **Git** permet de prendre des snapshots de son projet à divers moments. On nomme ces snapshots des `commits` dans le jargon **Git**. Ces snapshots (ou commits) sont organisés en un arbre dont la racine est le premier commit: l'état initial du projet. Chaque nouveau commit que l'on réalise ensuite pointe vers son parent (le commit précédent), et **Git** traque les changements requis pour passer d'un commit à un autre. Une des forces de cette approche est que l'on peut naviguer facilement dans l'historique de son projet sans stocker trop de données et avec une grande rapidité.
 
 ### GitHub
 
 L'un des principaux intérêts de **Git** réside dans le fait de pouvoir stocker ses données et son historique  de travail sur des serveurs externes. Autrement dit, sauvegarder l'état actuel de son travail, mais aussi l'ensemble des étapes qui ont permit d'arriver à cet état. 
 
-**GitHub** est ainsi une plateforme permettant le stockage des données d'utilisateurs sur le Cloud. On peut donc voir **GitHub** comme une application basée sur **Git** et offrant un certain nombre de services à ses utilisateurs. Bien entendu elle n'est pas la seule plateforme disponible, d'autres existent depuis longtemps comme **BitBucket** tandis que d'autres sont apparues plus récemment comme **GitLab**. Toutes ces plateformes ont de grandes similitudes et permettent de faire plus ou moins de choses. Dans ce tutoriel, on se focalisera sur **GitHub** qui est de loin la plus populaire de ces plateformes et celle qui offre, pour le moment, le plus grand éventail de services (*Issue tracking*, *Travis*, *CodeCov*...).
+**GitHub** est une plateforme permettant le stockage de dépôts **git**. Bien entendu elle n'est pas la seule plateforme disponible, d'autres existent depuis longtemps comme **BitBucket** tandis que d'autres sont apparues plus récemment comme **GitLab**. Toutes ces plateformes ont de grandes similitudes et permettent de faire plus ou moins de choses en plus du stockage de dépôts. Dans ce tutoriel, on se focalisera sur **GitHub** qui est de loin la plus populaire de ces plateformes et celle qui offre, pour le moment, le plus grand éventail de services (*Issue tracking*, *Travis*, *CodeCov*...).
 
 ### Le réseau social des dévelopeurs
 
@@ -43,7 +48,9 @@ Cette plateforme a pris tellement d'ampleur que certaines entreprises demande au
 
 ### Résumons...
 
-Comme expliqué plus haut, il est possible d'utiliser **Git** sans utiliser **GitHub**, et il est également possible d'utiliser **GitHub** sans utiliser **Git**. Dans les deux cas l'utilisation est très limitée et ne présente pas beaucoup d'intérêt par rapport à d'autres services comme *Dropbox*. Néanmoins, lorsque l'on combine l'utilisation des deux, on obtient un outil extrêmement puissant. La suite de ce tutoriel introduit les bases de **Git** et explique comment créer son propre projet et comment le *pousser* sur **GitHub**.
+Comme expliqué plus haut, il est possible d'utiliser **Git** sans utiliser **GitHub**, et il est également possible d'utiliser **GitHub** sans utiliser **Git**. Dans les deux cas l'utilisation est très limitée et ne présente pas beaucoup d'intérêt. Néanmoins, lorsque l'on combine l'utilisation des deux, on obtient un outil extrêmement puissant pour organiser son travail. 
+
+La suite de ce tutoriel introduit les bases de **Git**, explique comment créer son propre projet et comment le partager sur **GitHub**.
 
 ### Aller plus loin
 
@@ -51,7 +58,7 @@ Comme expliqué plus haut, il est possible d'utiliser **Git** sans utiliser **Gi
 
 ## II. Vérifier si Git est installé
 
-Pour vérifier que Git est bien installé, ouvrir un terminal et taper la commande suivante:
+Pour vérifier que Git est bien installé, ouvrez un terminal et tapez la commande suivante:
 
 ```bash
 $ git --version
@@ -62,7 +69,7 @@ Qui devrait retourner quelque chose comme
 ```bash
 git version 2.7.4
 ```
-si Git est bien installé.
+si Git est bien installé. Si ce n'est pas la cas, il va falloir installer git vous même. C'est assez facile, mais l'installation dépend de votre OS si bien que l'on ne couvrira pas ce point ici. Vous pouvez vous référer au lien juste après pour plus de détails sur l'installation de git sur les plateformes les plus courantes (Linux, MacOS, et Windows).
 
 ### Liens utiles
 
@@ -70,13 +77,13 @@ si Git est bien installé.
 
 ## III. Demander de l'aide à Git
 
-Pour afficher la documentation:
+Maintenant que Git est bien installé, on peut afficher la documentation grâce à:
 
 ```bash
 $ git --help
 ```
 
-En règle général Git s'évertue à donner un maximum d'information pour aider l'utilisateur. Ainsi en cas de faute de frappe dans une commande, Git propose souvent des corrections possibles:
+En règle générale Git s'évertue à donner un maximum d'information pour aider l'utilisateur. Ainsi, en cas de faute de frappe dans une commande par exemple, Git propose souvent des corrections possibles:
 
 ```bash
 $ git comit
@@ -86,19 +93,21 @@ Did you mean this?
     commit
 ```
 
+Plus généralement, il suffit de taper le début d'une commande pour que git nous informe des options disponibles.
+
 ## IV. Paramétrage de Git
 
 On suppose dans cette section que c'est la première fois que l'on utilise Git. Il y a un certain nombre de réglages très simples à effectuer la première fois, ces réglages persisteront ensuite.
 
 ### Paramétrage lors de la première utilisation
 
-Toutes les configurations se font via la commande `git config` qui se charge de modifier les variables de configurations. Il existe endroits différents où ces variables peuvent être stockées:
+Toutes les configurations se font via la commande `git config` qui se charge de modifier les variables de configurations. Il existe trois endroits différents où ces variables peuvent être stockées:
 
-- `/etc/gitconfig`: Les variables s'appliquent à tous les utilisateurs et tous les dépôts git du système. On peut modifier ces configurations en passant l'option `--system` à `git config`.
+- `/etc/gitconfig`: Les variables définies dans ce fichier s'appliquent à tous les utilisateurs et tous les dépôts git du système. On peut modifier ces configurations en passant l'option `--system` à `git config`.
 
-- `~/.gitconfig`: Les variables s'appliquent à l'utilisateur. On peut modifier ces configurations avec l'option `--global`
+- `~/.gitconfig`: Les variables de ce fichier s'appliquent à l'utilisateur. On peut modifier ces configurations avec l'option `--global`
 
-- Dans le fichier `.git/config` de chaque dépôt git. Dans ce cas là, les variables s'appiquent uniquement à ce dépôt.
+- Dans le fichier `.git/config` de chaque dépôt git. Dans ce cas là, les variables s'appliquent uniquement à ce dépôt.
 
 On peut donc définir différentes configurations suivant le projet ou suivant l'utilisateur. Cela ne nous impactera probablement pas dans ce tutoriel mais c'est une bonne chose à garder en mémoire car ça peut être très utile.
 
@@ -115,7 +124,7 @@ Bien entendu, il faut remplacer `John` et `Doe` par votre prénom et nom de fami
 
 #### Paramétrer son éditeur de texte
 
-Un autre réglage assez important consiiste à indiquer à git son éditeur de texte préféré. Git utilisera ensuite cet éditeur chaque fois qu'un texte devra être édité par vos soins. Il existe un grand nombre d'éditeurs de texte proposant plus ou moins de fonctionalités (vim, gedit, emacs, nano sont les plus courants). Dans notre exemple, nous utiliserons l'éditeur *vim*:
+Un autre réglage assez important consiste à indiquer à git son éditeur de texte préféré. Git utilisera ensuite cet éditeur chaque fois qu'un texte devra être modifié par vos soins. Il existe un grand nombre d'éditeurs de texte proposant plus ou moins de fonctionalités (*vim*, *gedit*, *emacs*, et *nano* sont les plus courants). Dans notre exemple, nous utiliserons l'éditeur *vim*:
 
 ```bash
 $ git config --global core.editor vim
@@ -151,7 +160,7 @@ La seconde méthode nécessite d'avoir un compte GitHub, nous y reviendrons plus
 
 ### Créer le dossier qui va contenir le projet
 
-On va donc créer un nouveau dossier qui contiendra notre nouveau projet. Ouvrez un terminal, et déplacez vous à un endroit de votre choix. Mon organisation personnelle consiste à créer un dossier *GitRepos* dans *home* et d'y mettre tout les dossier Git. En guise d'exemple, je vais créer ce dossier *GitRepos* et y créer un dossier *projet-test* qui contiendra notre nouveau projet:
+On va donc créer un nouveau dossier qui contiendra notre nouveau projet. Ouvrez un terminal, et déplacez vous à un endroit de votre choix. Mon organisation personnelle consiste à créer un dossier *GitRepos* dans *home* et d'y mettre tout les dossiers Git. Dans ce tutoriel, notre projet sera contenu dans un dossier nommé *projet-test*. Créons ces dossiers:
 
 ```bash
 $ cd ~
@@ -163,7 +172,7 @@ $ cd projet-test
 
 ### Transformer le dossier en répertoire git
 
-Pour le moment, *projet-test* est un répertoire comme un autre. Transformons le en répertoire Git:
+Pour le moment, *projet-test* est un répertoire comme un autre. Transformons le en un répertoire Git:
 
 ```bash
 $ git init
@@ -176,7 +185,7 @@ $ ls -a
 . .. .git
 ```
 
-La commande `git init` a donc créé un répertoire caché nommé `.git`. Quelque soit le projet, ce répertoire sera toujours présent à la racine et se nomera toujours pareil. Ce répertoire contient les informations dont Git a besoin et nous y reviendrons plus tard. 
+La commande `git init` a donc créé un répertoire caché nommé `.git`. Quelque soit le projet, ce répertoire sera toujours présent à la racine et se nommera toujours pareil. Ce répertoire contient les informations dont Git a besoin pour fonctionner. Nous y reviendrons plus en détails plus tard. 
 
 ### Ajouter du contenu
 
@@ -227,7 +236,8 @@ $ git add README.md
 Et voilà, git traque dorénavant notre README. Vérifions ce qu'il s'est passé dans le statut de notre projet:
 
 ```bash
-$ git statusOn branch master
+$ git status
+On branch master
 
 Initial commit
 
@@ -252,7 +262,7 @@ $ git commit -m "Add README"
 
 Nous venons tout juste de faire notre premier commit! L'option `-m` permet de spécifier un message expliquant les changements que ce commit introduit. Dans notre exemple, ce commit ajoute le fichier `README.md` à notre projet de telle sorte que notre message est `Add README`. Spécifier un message pour chaque commit n'est pas obligatoire mais TRES FORTEMENT encouragé... Autrement, il devient très rapidement impossible de se rappeler ce que chaque commit du projet avait pour but. 
 
-Git nous informe donc ici qu'il vient de créer un nouveau commit (le `root-commit` vu que c'est notre premier commit du projet), et donne des information sur les différences que ce commit introduit vis à vis du projet dans l'état précedent. Ici, on a changé un seul fichier et on a réalisé deux ajouts (git résonne par ligne).
+Git nous informe donc ici qu'il vient de créer un nouveau commit (le `root-commit` vu que c'est notre premier commit du projet), et nous donne des informations sur les différences que ce commit introduit vis à vis du projet dans l'état précedent. Ici, on a changé un seul fichier et on a réalisé deux ajouts (git résonne par ligne).
 
 Regardons l'état de notre projet:
 
@@ -262,7 +272,7 @@ On branch master
 nothing to commit, working directory clean
 ```
 
-Notre projet est clean: il ne contient aucun travail non sauvegardé.
+Notre projet est clean: il ne contient aucun travail non enregistré par git. Attention, cela ne veut pas dire que notre travail est sauvegardé sur GitHub! Pour cela il faudra *pousser* notre commit sur un dépôt distant. On abordera cela plus tard, mais il est important de garder en tête que tout ce que nous faisons ici est local.
 
 ### Faire un second commit
 
@@ -287,7 +297,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-Git nous informe que le fichier `README.md` a été modifié depuis le dernier commit et nous donne quelques exemples de commandes suivant ce que nous pourrions vouloir faire. La commande `git checkout README.md` restaure l'état de `README.md` de notre dernier commit. Dans notre exemple, cela veut dire qu'on reviendrait à un README sans les informations de contacts que l'on vient juste de rajouter. On voit bien sûr l'intérêt de cette commande: Imaginez que vous vouliez tenter de rajouter du code pour faire quelque chose de compliqué, mais qu'après plusieurs heures de souffrance, vous décidez que c'est finalement une mauvaise idée et que tout doit revenir "comme avant". En une simple commande vous pouvez revenir à une version propre de votre fichier. 
+Git nous informe que le fichier `README.md` a été modifié depuis le dernier commit et nous donne quelques exemples de commandes suivant ce que nous pourrions vouloir faire. La commande `git checkout README.md` restaure l'état de `README.md` de notre dernier commit. Dans notre exemple, cela veut dire qu'on reviendrait à un README sans les informations de contacts que l'on vient juste de rajouter. On voit bien sûr l'intérêt de cette commande: Imaginez que vous vouliez tenter de rajouter du code pour faire quelque chose de compliqué, mais qu'après plusieurs heures de souffrance, vous décidiez que c'est finalement une mauvaise idée et que tout doit revenir "comme avant". En une simple commande vous pouvez revenir à une version propre de votre fichier. 
 
 L'autre commande (que nous connaissons déjà) ajoute les changements réalisés à README.md au commit en cours:
 
@@ -305,7 +315,7 @@ $ git commit -m "Add contact information to the readme."
 
 ### Consulter l'historique du projet
 
-Notre projet est à nouveau propre et contient maintenant deux commits! Il est à tout moment possible de consulter l'historique de notre projet, c'est à dire la suite chronologique des commit réalisés jusqu'à maintenant:
+Notre projet est à nouveau propre et contient maintenant deux commits! Il est à tout moment possible de consulter l'historique de notre projet, c'est à dire la suite chronologique des commits réalisés jusqu'à maintenant:
 
 ```bash
 $ git log
@@ -329,11 +339,11 @@ Date:   Wed Jan 23 19:16:56 2019 +0100
 
 On y voit la liste des commits (le premier est toujours le plus récent) avec des informations comme le nom de l'auteur ou la date qui peuvent être très utiles sur de gros projets avec beaucoup de collaborateurs. On y voit également les commentaires que nous avons écrit et qui décrivent les commits que nous avons fait. On voit bien l'importance de ces messages lorsque l'on travaille à plusieurs ou que l'on ré-ouvre un projet après plusieures semaines de vacances... 
 
-La suite de charactères bizarres s'appelle le `hash` du commit et constitue en quelque sorte le nom du commit pour git. Lorsque nous auront besoin de référencer des commits spécifiques dans certaines commandes, c'est en général le hash du commit que l'on fournira. A noter que plusieurs commits peuvent avoir le même message descriptif, mais que les commits ont tous des hash différents. Finalement, taper "q" pour sortir du log.
+La suite de charactères bizarres s'appelle le `hash` du commit et constitue en quelque sorte le nom du commit pour git. Lorsque nous aurons besoin de référencer des commits spécifiques dans certaines commandes, c'est en général le hash du commit que l'on fournira. A noter que plusieurs commits peuvent avoir le même message descriptif, mais que les commits ont tous des hash différents. Finalement, taper "q" pour sortir du log.
 
 ## VI. Les branches
 
-Jusqu'à présent on a suivi un mode de dévelopement totalement linéaire où on modifie notre projet par petites touches successives. Ce genre d'approche peut être suffisante mais se révèlent souvent problématiques lorsqu'on travaille à plusieurs ou lorsqu'on a à developper plusieurs foctionnalités en même temps. Heureusement, git possède une solution particulièrement puissante pour gérer cela: *les branches*.
+Jusqu'à présent on a suivi un mode de dévelopement totalement linéaire où on a modifié notre projet par petites touches successives. Ce genre d'approche peut être suffisante mais se révèle souvent problématique lorsqu'on travaille à plusieurs ou lorsqu'on a à developper plusieures foctionnalités en même temps. Heureusement, git possède une solution particulièrement puissante pour gérer cela: *les branches*.
 
 ### Qu'est-ce qu'une branche?
 
@@ -341,11 +351,11 @@ Même si on ne le sait pas encore, on a déjà été confronté dans notre petit
 
 Tout cela ne nous dit toujours pas ce qu'est une branche pour git... **Une branche est tout simplement un pointeur vers un commit, rien de plus compliqué.**
 
-La branche par défaut dans un projet Git s'appelle généralement `master` mais il est tout à fait possible de la renomer (plutôt déconseillé car avoir son travail stable sur `master` est une sorte de convention sur Git).
+La branche par défaut dans un projet Git s'appelle généralement `master` mais il est tout à fait possible de la renommer (plutôt déconseillé car avoir son travail stable sur `master` est une convention sur Git).
 
 ### Créer une nouvelle branche
 
-Une branche est donc quelque chose de très simple, et il est également très facile d'en créer. Retournons sur notre projet et lancons la commande suivante:
+Une branche est donc quelque chose de très simple, et il est également très facile d'en créer une. Retournons sur notre projet et lançons la commande suivante:
 
 ```bash
 $ git branch
@@ -370,7 +380,7 @@ $ bit branch
 
 ### Se déplacer d'une branche à une autre
 
-Très bien, mais le symbole `*` est toujours devant `master`... Cela signifie que, même si nous avons créé une nouvelle branche, nous sommes toujours sur notre bonne vieille branche `master`... Cela signifie que si nous faisions un commit maintenant, il serait réalisé sur la branche `master` et non sur `new-feature`...
+Très bien, mais le symbole `*` est toujours devant `master`... Cela signifie que, même si nous avons créé une nouvelle branche, nous sommes toujours sur notre bonne vieille branche `master`. Cela signifie que si nous faisions un commit maintenant, il serait réalisé sur la branche `master` et non sur `new-feature`...
 
 Il faut donc dire à git que l'on souhaite changer de branche et aller voir `new-feature`. On fait cela avec la commande suivante:
 
